@@ -23,7 +23,8 @@ if(firebase.apps.length===0){
         const {displayName, email} = result.user;
         const signInUser = {name:displayName,email}
             setLogInUser(signInUser)
-            history.replace(from);
+            storeAuthToken()
+              history.replace(from);
             // ...
           }).catch(function(error) {
             // Handle Errors here.
@@ -36,6 +37,15 @@ if(firebase.apps.length===0){
             // ...
           });
     }
+            const storeAuthToken = ()=>{
+                firebase.auth().currentUser.getIdToken( true).then(function(idToken) {
+                   sessionStorage.setItem("token",idToken)
+                    
+                  }).catch(function(error) {
+                    // Handle error
+                  });
+            }
+
     return (
         <div>
             <h1>This is Login</h1>
